@@ -9,9 +9,10 @@ https://docs.djangoproject.com/en/3.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
-
+# from django.utils.translation import gettext as _
 from pathlib import Path
 import os
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -63,6 +64,15 @@ INSTALLED_APPS = [
     'reversion',  # Required by pinax-teams
     'rest_framework',  # required for the API
     'helpdesk',  # This is us!
+
+    'aldryn_apphooks_config',
+    'parler',
+    'taggit',
+    'taggit_autosuggest',
+    'meta',
+    'sortedm2m',
+    'djangocms_blog',
+    # 'aldryn_search'
 ]
 
 MIDDLEWARE = [
@@ -90,6 +100,14 @@ THUMBNAIL_PROCESSORS = (
     'filer.thumbnail_processors.scale_and_crop_with_subject_location',
     'easy_thumbnails.processors.filters'
 )
+
+META_SITE_PROTOCOL = 'http'  # set 'http' for non ssl enabled websites
+META_USE_SITES = True
+
+META_USE_OG_PROPERTIES=True
+META_USE_TWITTER_PROPERTIES=True
+META_USE_GOOGLEPLUS_PROPERTIES=True # django-meta 1.x+
+META_USE_SCHEMAORG_PROPERTIES=True  # django-meta 2.x+
 
 ROOT_URLCONF = 'HIA_Project.urls'
 
@@ -159,6 +177,17 @@ LANGUAGES = [
 
 LANGUAGE_CODE = 'en'
 
+# PARLER_LANGUAGES = {
+#     1: (
+#         {'code': 'en',},
+#         {'code': 'it',},
+#         {'code': 'fr',},
+#     ),
+#     'default': {
+#         'fallbacks': ['en', 'it', 'fr'],
+#     }
+# }
+
 TIME_ZONE = 'UTC'
 
 USE_I18N = True
@@ -195,3 +224,15 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_URL = '/helpdesk/login/'
+
+BLOG_AVAILABLE_PERMALINK_STYLES = (
+    ('full_date', ('Full date')),
+    ('short_date', ('Year /  Month')),
+    ('category', ('Category')),
+)
+
+BLOG_PERMALINK_URLS = {
+    "full_date": "<int:year>/<int:month>/<int:day>/<str:slug>/",
+    "short_date": "<int:year>/<int:month>/<str:slug>/",
+    "category": "<str:category>/<str:slug>/",
+}
