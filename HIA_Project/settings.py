@@ -12,9 +12,16 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 # from django.utils.translation import gettext as _
 from pathlib import Path
 import os
+import sys
+from django.utils.translation import gettext_lazy as _
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
+BASE_DIR_CUSTOM = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+git_helpdesk_path = os.path.join(BASE_DIR_CUSTOM, 'django-helpdesk')
+git_blog_path = os.path.join(BASE_DIR_CUSTOM, 'djangocms-blog')
+sys.path.insert(0, git_helpdesk_path)
+sys.path.insert(0, git_blog_path)
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
@@ -45,8 +52,6 @@ INSTALLED_APPS = [
     'menus',
     'treebeard',
     'sekizai',
-    'filer',
-    'easy_thumbnails',
     'mptt',
     'djangocms_text_ckeditor',
     'djangocms_link',
@@ -64,7 +69,11 @@ INSTALLED_APPS = [
     'reversion',  # Required by pinax-teams
     'rest_framework',  # required for the API
     'helpdesk',  # This is us!
-
+    'aldryn_forms',
+    'aldryn_forms.contrib.email_notifications',
+    'emailit',
+    'filer',
+    'easy_thumbnails',
     'aldryn_apphooks_config',
     'parler',
     'taggit',
@@ -72,7 +81,7 @@ INSTALLED_APPS = [
     'meta',
     'sortedm2m',
     'djangocms_blog',
-    # 'aldryn_search'
+    'aldryn_search'
 ]
 
 MIDDLEWARE = [
@@ -88,6 +97,7 @@ MIDDLEWARE = [
     'cms.middleware.page.CurrentPageMiddleware',
     'cms.middleware.toolbar.ToolbarMiddleware',
     'cms.middleware.language.LanguageCookieMiddleware',
+    'cms.middleware.utils.ApphookReloadMiddleware',
 ]
 
 X_FRAME_OPTIONS = 'SAMEORIGIN'
@@ -114,7 +124,7 @@ ROOT_URLCONF = 'HIA_Project.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['templates'],
+        'DIRS': [ BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -177,16 +187,16 @@ LANGUAGES = [
 
 LANGUAGE_CODE = 'en'
 
-# PARLER_LANGUAGES = {
-#     1: (
-#         {'code': 'en',},
-#         {'code': 'it',},
-#         {'code': 'fr',},
-#     ),
-#     'default': {
-#         'fallbacks': ['en', 'it', 'fr'],
-#     }
-# }
+PARLER_LANGUAGES = {
+    1: (
+        {'code': 'en',},
+        # {'code': 'it',},
+        # {'code': 'fr',},
+    ),
+    'default': {
+        'fallbacks': ['en'],
+    }
+}
 
 TIME_ZONE = 'UTC'
 
@@ -236,3 +246,27 @@ BLOG_PERMALINK_URLS = {
     "short_date": "<int:year>/<int:month>/<str:slug>/",
     "category": "<str:category>/<str:slug>/",
 }
+
+# CKEDITOR_ALLOW_NONIMAGE_FILES = False
+
+CKEDITOR_SETTINGS = {
+    'language': '{{ language }}',
+    'toolbar_CMS': [
+        ['Undo', 'Redo'],
+        ['cmsplugins', '-', 'ShowBlocks'],
+        ['Format', 'Styles'],
+    ],
+    'skin': 'moono-lisa',
+    'toolbar': 'Full',
+}
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+# EMAIL_HOST_USER ='lomaz.9999@gmail.com'
+# EMAIL_HOST_PASSWORD = 'lomaz0987654321'
+
+# DEFAULT_FROM_EMAIL = 'testmail@gmail.com'
+
+HAYSTACK_ROUTERS = ['aldryn_search.router.LanguageRouter',]
