@@ -32,6 +32,33 @@
     {% if view.liveblog_enabled %}
         {% include "liveblog/includes/post_detail.html" %}
     {% endif %}
+    <div class="d-flex flex-column">
+        {% if post.file1 %}
+        {% with file_path=post.file1.url  %}
+        <a href="{{ file_path|urlize }}" target="_blank" download>ดาวโหลดคู่มือ 1</a>
+        {% endwith %}
+        {% endif %}
+        {% if post.file2 %}
+        {% with file_path=post.file2.url  %}
+        <a href="{{ file_path|urlize }}" target="_blank" download>ดาวโหลดคู่มือ 2</a>
+        {% endwith %}
+        {% endif %}
+        {% if post.file3 %}
+        {% with file_path=post.file3.url  %}
+        <a href="{{ file_path|urlize }}" target="_blank" download>ดาวโหลดคู่มือ 3</a>
+        {% endwith %}
+        {% endif %}
+        {% if post.file4 %}
+        {% with file_path=post.file4.url  %}
+        <a href="{{ file_path|urlize }}" target="_blank" download>ดาวโหลดคู่มือ 4</a>
+        {% endwith %}
+        {% endif %}
+        {% if post.file5 %}
+        {% with file_path=post.file5.url  %}
+        <a href="{{ file_path|urlize }}" target="_blank" download>ดาวโหลดคู่มือ 5</a>
+        {% endwith %}
+        {% endif %}
+        </div>
     {% if post.related.exists %}
         <section class="post-detail-list">
         {% for related in post.related.all %}

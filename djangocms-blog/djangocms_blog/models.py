@@ -19,6 +19,7 @@ from django.utils.translation import get_language, gettext, gettext_lazy as _
 from djangocms_text_ckeditor.fields import HTMLField
 from easy_thumbnails.files import get_thumbnailer
 from filer.fields.image import FilerImageField
+from filer.fields.file import FilerFileField
 from filer.models import ThumbnailOption
 from meta.models import ModelMeta
 from parler.models import TranslatableModel, TranslatedFields
@@ -216,6 +217,41 @@ class Post(KnockerModel, BlogMetaMixin, TranslatableModel):
         null=True,
         on_delete=models.SET_NULL,
         related_name="djangocms_blog_post_image",
+    )
+    file1 = FilerFileField(
+        verbose_name=_("ไฟล์ที่ 1"),
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name="djangocms_blog_post_file1",
+    )
+    file2 = FilerFileField(
+        verbose_name=_("ไฟล์ที่ 2"),
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name="djangocms_blog_post_file2",
+    )
+    file3 = FilerFileField(
+        verbose_name=_("ไฟล์ที่ 3"),
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name="djangocms_blog_post_file3",
+    )
+    file4 = FilerFileField(
+        verbose_name=_("ไฟล์ที่ 4"),
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name="djangocms_blog_post_file4",
+    )
+    file5 = FilerFileField(
+        verbose_name=_("ไฟล์ที่ 5"),
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name="djangocms_blog_post_file5",
     )
     main_image_thumbnail = models.ForeignKey(
         thumbnail_model,

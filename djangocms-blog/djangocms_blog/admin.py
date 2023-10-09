@@ -138,6 +138,10 @@ class PostAdmin(PlaceholderAdminMixin, FrontendEditableAdminMixin, ModelAppHookC
             _("Images"),
             {"fields": [["main_image", "main_image_thumbnail", "main_image_full"]], "classes": ("collapse",)},
         ),
+        (
+            _("Files"),
+            {"fields": [["file1", "file2", "file3", "file4", "file5"]], "classes": ("collapse",)},
+        ),
         (_("SEO"), {"fields": [["meta_description", "meta_title", "meta_keywords"]], "classes": ("collapse",)}),
     ]
     """
