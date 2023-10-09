@@ -199,7 +199,7 @@ class AbstractTicketForm(CustomFieldMixin, forms.Form):
     """
     queue = forms.ChoiceField(
         widget=forms.Select(attrs={'class': 'form-control'}),
-        label=_('Queue'),
+        label=_('เครือข่าย'),
         required=True,
         choices=()
     )
@@ -208,46 +208,46 @@ class AbstractTicketForm(CustomFieldMixin, forms.Form):
         max_length=100,
         required=True,
         widget=forms.TextInput(attrs={'class': 'form-control'}),
-        label=_('Summary of the problem'),
+        label=_('หัวข้อที่จะปรึกษา'),
     )
 
     body = forms.CharField(
         widget=forms.Textarea(attrs={'class': 'form-control'}),
-        label=_('Description of your issue'),
+        label=_('รายละเอียด'),
         required=True,
-        help_text=_(
-            'Please be as descriptive as possible and include all details'),
+        # help_text=_(
+        #     'Please be as descriptive as possible and include all details'),
     )
 
-    priority = forms.ChoiceField(
-        widget=forms.Select(attrs={'class': 'form-control'}),
-        choices=Ticket.PRIORITY_CHOICES,
-        required=True,
-        initial=getattr(settings, 'HELPDESK_PUBLIC_TICKET_PRIORITY', '3'),
-        label=_('Priority'),
-        help_text=_(
-            "Please select a priority carefully. If unsure, leave it as '3'."),
-    )
+    # priority = forms.ChoiceField(
+    #     widget=forms.Select(attrs={'class': 'form-control'}),
+    #     choices=Ticket.PRIORITY_CHOICES,
+    #     required=True,
+    #     initial=getattr(settings, 'HELPDESK_PUBLIC_TICKET_PRIORITY', '3'),
+    #     label=_('Priority'),
+    #     help_text=_(
+    #         "Please select a priority carefully. If unsure, leave it as '3'."),
+    # )
 
-    due_date = forms.DateTimeField(
-        widget=forms.TextInput(
-            attrs={'class': 'form-control', 'autocomplete': 'off'}),
-        required=False,
-        input_formats=[CUSTOMFIELD_DATE_FORMAT,
-                       CUSTOMFIELD_DATETIME_FORMAT, '%d/%m/%Y', '%m/%d/%Y', "%d.%m.%Y"],
-        label=_('Due on'),
-    )
+    # due_date = forms.DateTimeField(
+    #     widget=forms.TextInput(
+    #         attrs={'class': 'form-control', 'autocomplete': 'off'}),
+    #     required=False,
+    #     input_formats=[CUSTOMFIELD_DATE_FORMAT,
+    #                    CUSTOMFIELD_DATETIME_FORMAT, '%d/%m/%Y', '%m/%d/%Y', "%d.%m.%Y"],
+    #     label=_('Due on'),
+    # )
 
-    attachment = forms.FileField(
-        widget=forms.FileInput(attrs={'class': 'form-control-file'}),
-        required=False,
-        label=_('Attach File'),
-        help_text=_('You can attach a file to this ticket. '
-                    'Only file types such as plain text (.txt), '
-                    'a document (.pdf, .docx, or .odt), '
-                    'or screenshot (.png or .jpg) may be uploaded.'),
-        validators=[validate_file_extension]
-    )
+    # attachment = forms.FileField(
+    #     widget=forms.FileInput(attrs={'class': 'form-control-file'}),
+    #     required=False,
+    #     label=_('Attach File'),
+    #     help_text=_('You can attach a file to this ticket. '
+    #                 'Only file types such as plain text (.txt), '
+    #                 'a document (.pdf, .docx, or .odt), '
+    #                 'or screenshot (.png or .jpg) may be uploaded.'),
+    #     validators=[validate_file_extension]
+    # )
 
     class Media:
         js = ('helpdesk/js/init_due_date.js',
@@ -325,7 +325,7 @@ class AbstractTicketForm(CustomFieldMixin, forms.Form):
         return followup
 
     def _attach_files_to_follow_up(self, followup):
-        files = self.cleaned_data['attachment']
+        files = self.cleaned_data.get('attachment', None)
         if files:
             files = process_attachments(followup, [files])
         return files
@@ -353,11 +353,11 @@ class TicketForm(AbstractTicketForm):
     """
     submitter_email = forms.EmailField(
         required=False,
-        label=_('Submitter E-Mail Address'),
+        label=_('E-Mail'),
         widget=forms.TextInput(
             attrs={'class': 'form-control', 'type': 'email'}),
-        help_text=_('This e-mail address will receive copies of all public '
-                    'updates to this ticket.'),
+        # help_text=_('This e-mail address will receive copies of all public '
+        #             'updates to this ticket.'),
     )
     assigned_to = forms.ChoiceField(
         widget=(
@@ -434,8 +434,8 @@ class PublicTicketForm(AbstractTicketForm):
         widget=forms.TextInput(
             attrs={'class': 'form-control', 'type': 'email'}),
         required=True,
-        label=_('Your E-Mail Address'),
-        help_text=_('We will e-mail you when your ticket is updated.'),
+        label=_('E-Mail'),
+        # help_text=_('We will e-mail you when your ticket is updated.'),
     )
 
     def __init__(self, hidden_fields=(), readonly_fields=(), *args, **kwargs):

@@ -1,19 +1,19 @@
 {% extends "helpdesk/public_base.html" %}
 {% load i18n %}
 
-{% block helpdesk_title %}{% trans "Create Ticket" %}{% endblock %}
+{% comment %} {% block helpdesk_title %}{% trans "Create Ticket" %}{% endblock %} {% endcomment %}
 
-{% block helpdesk_breadcrumb %}
+{% comment %} {% block helpdesk_breadcrumb %}
     <li class="breadcrumb-item">
         <a href="{% url 'helpdesk:home' %}">Public</a>
     </li>
     <li class="breadcrumb-item active">Create Ticket</li>
-{% endblock %}
+{% endblock %} {% endcomment %}
 
 {% block helpdesk_body %}
     <div class="container">
         <div class="card card-register mx-auto mt-5">
-            <div class="card-header">{% trans "Submit a Ticket" %}</div>
+            <h4 class="card-header">{% trans "แบบฟอร์มขอคำปรึกษา" %}</h4>
             <div class="card-body">
                 {% include 'helpdesk/public_create_ticket_base.html' %}
             </div>

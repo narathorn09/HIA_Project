@@ -121,7 +121,7 @@ class Queue(models.Model):
     allow_public_submission = models.BooleanField(
         _('Allow Public Submission?'),
         blank=True,
-        default=False,
+        default=True,
         help_text=_(
             'Should this queue be listed on the public submission form?'),
     )
