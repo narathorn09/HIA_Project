@@ -1,0 +1,46 @@
+{% extends "index.html"%} {% block content %} {% load i18n %}
+
+<div class="container">
+  <div class="card card-register mx-auto mt-5 col-md-4 col-sx-12 col-sm-12 mb-5">
+    <h4 class="card-header">{% trans "เข้าสู่ระบบ" %}</h4>
+    <div class="card-body">
+      <form
+        action="/admin/login/?next=/admin/login"
+        method="post"
+        id="login-form"
+      >
+        {% csrf_token %}
+        <div class="mb-3">
+          <label for="id_username" class="form-label">Username</label>
+          <input
+            type="text"
+            name="username"
+            autofocus=""
+            autocapitalize="none"
+            autocomplete="username"
+            maxlength="150"
+            required="กรุณากรอก username"
+            id="id_username"
+            class="form-control"
+            id="id_username"
+          />
+
+          <label for="id_password" class="form-label">Password</label>
+          <input
+            type="password"
+            name="password"
+            autocomplete="current-password"
+            required="กรุณากรอก password"
+            id="id_password"
+            class="form-control"
+          />
+          {% comment %} <input type="hidden" name="next" value="/admin/login" /> {% endcomment %}
+        </div>
+
+        <input type="submit" value="Log in" class="btn btn-primary" />
+      </form>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

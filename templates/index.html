@@ -4,7 +4,7 @@
 <html lang="en">
 
 <head>
-    {% comment %} <meta charset="utf-8"> {% endcomment %}
+    <meta charset="utf-8">
     <title>{% page_attribute "page_title" %}</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     {% comment %} <meta content="" name="keywords"> {% endcomment %}
@@ -33,14 +33,11 @@
     <!-- Template Stylesheet -->
     <link href="{% static 'assets/css/style.css' %}" rel="stylesheet">
     {% render_block "css" %}
-    {% comment %} {% show_menu 0 100 100 100 %} {% endcomment %}
-
 </head>
 
 <body>
     {% cms_toolbar %}
 
-    
     <!-- Spinner Start -->
     <div id="spinner"
         class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
@@ -62,7 +59,6 @@
     </div>
     <!-- Hero End --> 
 
-
     <!-- Full Screen Search Start -->
     <div class="modal fade" id="searchModal" tabindex="-1">
         <div class="modal-dialog modal-fullscreen">
@@ -82,6 +78,7 @@
         </div>
     </div>
     <!-- Full Screen Search End --> 
+    
     {% block content %}
     {% placeholder content %}
     {% endblock content%} 
