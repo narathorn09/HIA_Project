@@ -18,11 +18,12 @@ from django.urls import path, include, re_path
 from django.conf.urls import url
 from django.conf import settings
 from django.conf.urls.static import static
+from django.contrib.auth import views as auth_views
 
 urlpatterns = [
+    path('login/', auth_views.LoginView.as_view(template_name='login.html'), name='login'),
     path('admin/', admin.site.urls),
     path('helpdesk/', include('helpdesk.urls')),
-    # path('blog/', include('djangocms_blog.urls')),
     re_path(r'^', include('cms.urls')),
     url(r'^taggit_autosuggest/', include('taggit_autosuggest.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

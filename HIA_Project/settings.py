@@ -13,8 +13,6 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 from pathlib import Path
 import os
 import sys
-from django.utils.translation import gettext_lazy as _
-
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR_CUSTOM = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -141,8 +139,7 @@ TEMPLATES = [
 ]
 
 CMS_TEMPLATES = [
-    ('home.html', 'Home page template'),
-    ('index.html', 'index'),
+    ('index.html', 'Home Page'),
 ]
 
 WSGI_APPLICATION = 'HIA_Project.wsgi.application'
@@ -265,8 +262,8 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 # EMAIL_HOST_USER ='lomaz.9999@gmail.com'
-# EMAIL_HOST_PASSWORD = 'lomaz0987654321'
+# EMAIL_HOST_PASSWORD = '***'
 
 # DEFAULT_FROM_EMAIL = 'testmail@gmail.com'
 
-HAYSTACK_ROUTERS = ['aldryn_search.router.LanguageRouter',]
+# HAYSTACK_ROUTERS = ['aldryn_search.router.LanguageRouter',]
