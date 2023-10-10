@@ -3,7 +3,7 @@
 <ul class="post-detail">
     {% if post.author %}
     <li>
-        {% trans "by" %} <a href="{% namespace_url 'posts-author' post.author.get_username namespace=post.app_config.namespace %}">{% if post.author.get_full_name %}{{ post.author.get_full_name }}{% else %}{{ post.author }}{% endif %}</a>
+        {% trans "ผู้เขียน" %} <a href="{% namespace_url 'posts-author' post.author.get_username namespace=post.app_config.namespace %}">{% if post.author.get_full_name %}{{ post.author.get_full_name }}{% else %}{{ post.author }}{% endif %}</a>
     </li>
     {% endif %}
     {% if post.date_published %}

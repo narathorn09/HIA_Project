@@ -15,12 +15,13 @@ from django.urls import path, reverse
 from django.utils import timezone
 from django.utils.translation import get_language_from_request, gettext_lazy as _, ngettext as __
 from parler.admin import TranslatableAdmin
+from django.contrib.auth.models import Group
 
 from .cms_appconfig import BlogConfig
 from .forms import CategoryAdminForm, PostAdminForm
 from .models import BlogCategory, Post
 from .settings import get_setting
-
+from django.contrib.auth.models import Group
 signal_dict = {}
 
 
@@ -436,15 +437,23 @@ class PostAdmin(PlaceholderAdminMixin, FrontendEditableAdminMixin, ModelAppHookC
         obj._set_default_author(request.user)
         super().save_model(request, obj, form, change)
 
+
     def get_queryset(self, request):
         qs = super().get_queryset(request)
-        sites = self.get_restricted_sites(request)
-        if sites.exists():
-            pks = list(sites.all().values_list("pk", flat=True))
-            qs = qs.filter(sites__in=pks)
-        # can't use distinct here because it prevents deleting records, but we need a unique list of posts because
-        # filters can cause duplicates
-        return super().get_queryset(request).filter(pk__in=qs.values_list("pk", flat=True))
+
+        if request.user.is_superuser:
+            return qs  # Super admin can see all post
+        
+        # Check if the user belongs to the 'admin' group
+        if Group.objects.filter(user=request.user, name='ADMIN').exists():
+            return qs  # Admin group can see all posts
+
+        # Check if the user belongs to the 'expert' group
+        if Group.objects.filter(user=request.user, name='EXPERT').exists():
+            return qs.filter(author=request.user)  # Expert group can see their own posts
+
+        # If the user doesn't belong to either group, return an empty queryset
+        return qs.none()
 
     def save_related(self, request, form, formsets, change):
         if self.get_restricted_sites(request).exists():

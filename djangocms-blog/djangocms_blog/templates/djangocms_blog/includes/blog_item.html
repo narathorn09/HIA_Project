@@ -12,36 +12,38 @@
       {% for preview in previews %}<img src="{{ preview }}" />{% endfor %}
     </div> {% endcomment %}
 {% endif %}
-<div class="col-lg-4 wow fadeIn" data-wow-delay="0.3s">
-    <div class="case-item position-relative overflow-hidden rounded mb-2">
-        <img class="img-fluid"  src="{{ thumb.url }}" alt="" style="min-width: 200px">
-        <a class="case-overlay text-decoration-none" href="{{ post.get_absolute_url }}">
-            <small>Robotic Automation</small>
-            <h5 class="lh-base text-white mb-3">{{ post.title }}</h5>
-            <span class="btn btn-square btn-primary"><i class="fa fa-arrow-right"></i></span>
-        </a>
-    </div>
-</div>
 
-    <h3><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h3>
+<div class="card" style="width: 18rem;">
+    {% if thumb.url %}
+    <img src="{{ thumb.url }}" class="card-img-top" alt="image">
+    {% else %}
+    <p>ไม่มีรูปภาพ</p>
+    {% endif %}
 
-    <div>
-        <h4>{{ post.subtitle }}</h4>
-        {% if post.subtitle %}
-        {% endif %}
-        {% block blog_meta %}
-            {% include "djangocms_blog/includes/blog_meta.html" %}
-        {% endblock %}
-    </div>
-    <div class="blog-lead">
+    <div class="card-body max-high-100">
+      <h5 class="card-title">{{ post.title }}</h5>
+      <p class="card-text">    
         {% if not TRUNCWORDS_COUNT %}
             {% render_model post "abstract" "" "" "safe" %}
         {% else %}
             {% render_model post "abstract" "" "" "truncatewords_html:TRUNCWORDS_COUNT|safe"  %}
         {% endif %}
+     </p>
+      <a href="{{ post.get_absolute_url }}" class="btn btn-primary">{% trans "อ่านเพิ่มเติม" %} &raquo;</a>
+    </div>
+  </div>
+
+  
+
+    <div>
+        <h4>{{ post.subtitle }}</h4>
+        {% if post.subtitle %}
+        {% endif %}
+        {% comment %} {% block blog_meta %}
+            {% include "djangocms_blog/includes/blog_meta.html" %}
+        {% endblock %} {% endcomment %}
     </div>
 
-    <footer class="read-more">
-        <a href="{{ post.get_absolute_url }}">{% trans "read more" %} &raquo;</a>
-    </footer>
+
+  
 </article>
