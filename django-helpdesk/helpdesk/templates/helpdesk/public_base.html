@@ -1,11 +1,12 @@
-{% extends 'index.html'%}
-{% load i18n %}
-{% load static menu_tags%}
+{% extends 'index.html' %}
+{% load i18n helpdesk_staff %}
+{% load static menu_tags %}
 {% load load_helpdesk_settings %}
 {% with request|load_helpdesk_settings as helpdesk_settings %}
 
-{% block content %}
 
+{% block content %}
+{% if user.is_authenticated %}
 <body id="bg-dark">
 
     {% comment %} {% include "helpdesk/navigation-header.html" %} {% endcomment %}
@@ -39,6 +40,11 @@
     {% include 'helpdesk/base_js.html' %}
     {% block helpdesk_js %}{% endblock %}
 </body>
-{% endblock content%} 
+{% else %}
+    {% comment %} <script>
+        window.location.href = "/admin/login";  // Redirect to the login page
+    </script> {% endcomment %}
+{% endif %}
+{% endblock content %}
 
 {% endwith %}
